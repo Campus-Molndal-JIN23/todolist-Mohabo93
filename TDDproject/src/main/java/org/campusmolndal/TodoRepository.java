@@ -56,7 +56,6 @@ public class TodoRepository {
     //Hjälpmetod för att skapa Todo-objekt från dokument
     private Todo createTodoFromDocument(Document document) {
         return new Todo(
-                document.getString("id"),
                 document.getString("text"),
                 document.getBoolean("done"),
                 document.getString("assignedTo"));

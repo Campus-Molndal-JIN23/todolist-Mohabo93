@@ -1,6 +1,7 @@
 package org.campusmolndal;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Todo {
     private String id;
@@ -9,9 +10,12 @@ public class Todo {
     private String assignedTo;
 
     public Todo() {
+        //Generera ett slumpmässigt ID
+        this.id = UUID.randomUUID().toString();
+
     }
-    public Todo (String id, String text, boolean done, String assignedTo) {
-        this.id = id;
+    public Todo (String text, boolean done, String assignedTo) {
+        this();
         this.text = text;
         this.done = done;
         this.assignedTo = assignedTo;
