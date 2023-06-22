@@ -26,7 +26,11 @@ public class TodoFacade {
         MongoCollection<Document> todoCollection = database.getCollection(collectionName);
 
         //Skapa en TodoRepository med samlingen
-        todoRepository = new TodoRepository(todoCollection);
+        this.todoRepository = new TodoRepository(todoCollection);
+    }
+
+    public TodoFacade(TodoRepository todoRepository) {
+
     }
 
     //Lägger till en Todo i databasen
@@ -57,5 +61,8 @@ public class TodoFacade {
     //Uppdaterar statusen (done)för en Todo med en specifik id
     public void updateTodoDoneStatus(String id, boolean done){
         todoRepository.updateTodoDoneStatus(id, done);
+    }
+    public void setTodoRepository(TodoRepository todoRepository){
+        this.todoRepository = todoRepository;
     }
 }
