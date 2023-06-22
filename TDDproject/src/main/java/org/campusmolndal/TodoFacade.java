@@ -12,6 +12,7 @@ public class TodoFacade {
     private TodoRepository todoRepository;
 
     public TodoFacade() {
+
         //Skapa en anslutning till MongoDB-databasen med standardinställningar
         String connectionString = "mongodb://localhost:27017";
         String databaseName = "mydatabase";
@@ -47,6 +48,11 @@ public class TodoFacade {
     public void updateTodoText(String id, String newText) {
         todoRepository.updateTodoText(id, newText);
     }
+
+    //Tar bort en Todo med en specifik id från databasen
+    public void deleteTodoById(String id) {
+       todoRepository.deleteTodoById(id);
+       }
 
     //Uppdaterar statusen (done)för en Todo med en specifik id
     public void updateTodoDoneStatus(String id, boolean done){

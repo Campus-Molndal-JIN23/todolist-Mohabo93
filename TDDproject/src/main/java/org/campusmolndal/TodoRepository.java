@@ -2,6 +2,8 @@ package org.campusmolndal;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,19 @@ public class TodoRepository {
 
     //Uppdaterar texten för en Todo med en specifik id
     public void updateTodoText(String id, String newText) {
-        todoCollection.updateOne(Filters.eq("id", id), Updates.set("text", newText));
+        UpdateResult result = todoCollection.updateOne(Filters.eq("id", id), Updates.set("text", newText));
+        if (result.getModifiedCount() == 0) {
+            throw new IllegalArgumentException("Todo med ID " + id + " existerar inte.");
+        }
+    }
+
+    //Tar bort Todo med specifik id från databasen
+    public void deleteTodoById(String id) {
+        DeleteResult result = todoCollection.deleteOne(Filters.eq("id", id));
+        if (result.getDeletedCount() == 0) {
+            throw new IllegalArgumentException("Todo med ID " + id + " existerar inte.");
+        }
+        System.out.println("Todo med ID " + id + " har tagits bort.");
     }
 
     //Uppdatera statusen (done) för en Todo med en specifik id
