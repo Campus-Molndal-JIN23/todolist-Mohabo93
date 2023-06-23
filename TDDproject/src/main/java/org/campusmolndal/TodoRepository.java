@@ -5,6 +5,8 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +66,10 @@ public class TodoRepository {
 
     //Uppdatera statusen (done) för en Todo med en specifik id
     public void updateTodoDoneStatus(String id, boolean done) {
-        todoCollection.updateOne(Filters.eq("id", id), Updates.set("done", done));
+        UpdateResult result = todoCollection.updateOne(Filters.eq("id", id), Updates.set("done", done));
+        if (result.getModifiedCount() == 0) {
+            throw new IllegalArgumentException("Todo med ID " + id + " existerar inte.");
+        }
     }
 
     //Hjälpmetod för att skapa Todo-objekt från dokument

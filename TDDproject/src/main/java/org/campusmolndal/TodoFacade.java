@@ -30,6 +30,7 @@ public class TodoFacade {
     }
 
     public TodoFacade(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
 
     }
 
@@ -59,10 +60,10 @@ public class TodoFacade {
        }
 
     //Uppdaterar statusen (done)för en Todo med en specifik id
-    public void updateTodoDoneStatus(String id, boolean done){
+    public void updateTodoDoneStatus(String id,boolean done){
         todoRepository.updateTodoDoneStatus(id, done);
     }
-    public void setTodoRepository(TodoRepository todoRepository){
-        this.todoRepository = todoRepository;
+
+    public void setTodoRepository(TodoRepository todoRepository) {
     }
 }

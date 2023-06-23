@@ -1,12 +1,11 @@
 package org.campusmolndal;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-
 
 public class TodoFacadeTest {
     @Mock
@@ -15,8 +14,8 @@ public class TodoFacadeTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        todoFacade = new TodoFacade(todoRepository);
+       todoRepository = Mockito.mock(TodoRepository.class);
+       todoFacade = new TodoFacade(todoRepository);
     }
 
     @Test
@@ -27,7 +26,6 @@ public class TodoFacadeTest {
         todoFacade.setTodoRepository(todoRepository);
         Todo todo = new Todo();
 
-        // Mocka beteendet för todoRepository.addTodo()
         doNothing().when(todoRepository).addTodo(Mockito.any(Todo.class));
 
         // Act
@@ -38,22 +36,81 @@ public class TodoFacadeTest {
     }
 
     @Test
-    void GetAllTodos() {
+    void getAllTodos_shouldReturnAllTodos() {
+        //Arrange
+        List<Todo> todos = List.of(
+                new Todo("Todo 1", false, "User 1"),
+                new Todo("Todo 2", true, "User 2")
+        );
+        when(todoRepository.getAllTodos()).thenReturn(todos);
+
+        //Act
+        List<Todo> result = todoFacade.getAllTodos();
+
+        //Assert
+        assertEquals(todos, result);
+        verify(todoRepository, times(1)).getAllTodos();
     }
 
     @Test
-    void getTodoById() {
+    void getTodoById_shouldReturnCorrectTodo() {
+        //Arrange
+        String id = "1";
+        Todo todo = new Todo("Todo 1", false, "User 1");
+        when(todoRepository.getTodoById(id)).thenReturn(todo);
+
+        //Act
+        Todo result = todoFacade.getTodoById(id);
+
+        //Assert
+        assertEquals(todo, result);
+        verify(todoRepository, times(1)).getTodoById(id);
     }
 
     @Test
-    void updateTodoText() {
+    void updateTodoText_shouldUpdateTodoText() {
+        //Arrange
+        String id = "1";
+        String newText = "Updated Todo";
+        Todo todo = new Todo("Todo 1", false, "User 1");
+
+        TodoRepository todoRepository = mock(TodoRepository.class);
+        when(todoRepository.getTodoById(id)).thenReturn(todo);
+
+        //Act
+        todoFacade.updateTodoText(id, newText);
+
+        //Assert
+        verify(todoRepository, times(1)).updateTodoText(id, newText);
     }
 
     @Test
-    void deleteTodoById() {
+    void deleteTodoById_shouldDeleteTodo() {
+        //Arrange
+        String id = "1";
+        Todo todo = new Todo("Todo 1", false, "User 1");
+        when(todoRepository.getTodoById(id)).thenReturn(todo);
+
+        //Act
+        todoFacade.deleteTodoById(id);
+
+        //Assert
+        verify(todoRepository, times(1)).deleteTodoById(id);
     }
 
     @Test
-    void updateTodoDoneStatus() {
+    void updateTodoDoneStatus_shouldUpdateTodoDoneStatus() {
+        //Arrange
+        String id = "1";
+        boolean done = true;
+
+        TodoRepository todoRepository = mock(TodoRepository.class);
+        TodoFacade todoFacade = new TodoFacade(todoRepository);
+
+        //Act
+        todoFacade.updateTodoDoneStatus(id, done);
+
+        //Assert
+        verify(todoRepository, times(1)).updateTodoDoneStatus(id, done);
     }
 }
