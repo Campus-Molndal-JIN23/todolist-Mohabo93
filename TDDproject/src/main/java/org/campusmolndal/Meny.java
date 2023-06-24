@@ -1,5 +1,6 @@
 package org.campusmolndal;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class Meny {
     }
 
     //Huvudmeny
-    private void displayMeny() {
+    public void displayMeny() {
         System.out.println("============ TODO MENY ============");
         System.out.println("1. Lägg till en Todo");
         System.out.println("2. Visa alla Todos");
