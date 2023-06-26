@@ -1,7 +1,6 @@
 package org.campusmolndal;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class Todo {
     private String id;
@@ -10,18 +9,22 @@ public class Todo {
     private String assignedTo;
 
     public Todo() {
-        //Generera ett slumpmässigt ID
-        this.id = UUID.randomUUID().toString();
+        }
 
-    }
-    public Todo (String text, boolean done, String assignedTo) {
-        this();
+    public Todo (String id, String text, boolean done, String assignedTo) {
+        this.id = id;
         this.text = text;
         this.done = done;
         this.assignedTo = assignedTo;
     }
 
     //Getters och Setters för dem olika attributen
+    public String getId() {
+          return id;
+      }
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getAssignedTo() {
         return assignedTo;
     }
@@ -41,13 +44,6 @@ public class Todo {
     }
     public void setText(String text) {
         this.text = text;
-    }
-
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
     }
 
     //toString-metod för att ge en strängrepresentation av Todo-objektet

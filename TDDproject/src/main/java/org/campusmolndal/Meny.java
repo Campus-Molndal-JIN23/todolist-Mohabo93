@@ -1,12 +1,12 @@
 package org.campusmolndal;
-
-import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Meny {
     private TodoFacade todoFacade;
     private Scanner scanner;
+    private int todoCounter = 1;
 
     public Meny(TodoFacade todoFacade) {
         this.todoFacade = todoFacade;
@@ -73,14 +73,25 @@ public class Meny {
     //Lägger till en ny Todo baserat på användarinmatning
     private void addTodo() {
         scanner.nextLine();
+        System.out.println("Ange Todo-ID:  ");
+        String id = scanner.nextLine();
+
+        while (todoFacade.getTodoById(id) != null) {
+            System.out.println("Todo-ID är upptaget. Välj ett annat Todo-ID: ");
+            id = scanner.nextLine();
+        }
+
         System.out.println("Skriv in Todo-meddelandet");
         String text = scanner.nextLine();
+
         System.out.println("Skriv in tilldelad person: ");
         String assignedTo = scanner.nextLine();
 
         Todo todo = new Todo();
+        todo.setId(id);
         todo.setText(text);
         todo.setAssignedTo(assignedTo);
+        todo.setDone(false);
 
         todoFacade.addTodo(todo);
 
@@ -95,9 +106,12 @@ public class Meny {
         } else {
             System.out.println("======= ALLA TODOS =======");
             for (Todo todo : todos) {
-                System.out.println(todo);
+                System.out.println("Todo ID: " + todo.getId());
+                System.out.println("Text: " + todo.getText());
+                System.out.println("Done: " + todo.isDone());
+                System.out.println("AssignedTo: " + todo.getAssignedTo());
+                System.out.println("==========================");
             }
-            System.out.println("===========================");
         }
     }
 
@@ -112,7 +126,10 @@ public class Meny {
             System.out.println("Todo saknas.");
         } else {
             System.out.println("====== TODO INFO ======");
-            System.out.println(todo);
+            System.out.println("Todo ID: " + todo.getId());
+            System.out.println("Text: " + todo.getText());
+            System.out.println("Done: " + todo.isDone());
+            System.out.println("AssignedTo: " + todo.getAssignedTo());
             System.out.println("=======================");
         }
     }
@@ -159,3 +176,4 @@ public class Meny {
         }
     }
 }
+
