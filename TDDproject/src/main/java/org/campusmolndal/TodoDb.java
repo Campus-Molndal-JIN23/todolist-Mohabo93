@@ -26,7 +26,9 @@ public class TodoDb {
 
         //Hämta referens till databasen och samlingen
         MongoDatabase database = mongoClient.getDatabase(databaseName);
-        todoCollection = database.getCollection(collectionName);
+        MongoDatabase dbName = mongoClient.getDatabase("TodoList");
+        todoCollection = dbName.getCollection(collectionName);
+
     }
 
     //Lägger till en Todo i samlingen - Skapar ett dokument från Todo-objektet - Infogar dokumentet i samlingen
