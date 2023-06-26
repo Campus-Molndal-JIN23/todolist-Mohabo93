@@ -19,7 +19,7 @@ public class TodoFacadeTest {
     }
 
     @Test
-    void addTodo_shouldAddTodoToRepository() {
+    void addTodo_shouldAddTodoToDb() {
         // Arrange
         TodoDb todoDb = mock(TodoDb.class);
         TodoFacade todoFacade = new TodoFacade(todoDb);
