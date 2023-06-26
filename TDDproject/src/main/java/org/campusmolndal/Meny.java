@@ -1,7 +1,6 @@
 package org.campusmolndal;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class Meny {
     private TodoFacade todoFacade;
